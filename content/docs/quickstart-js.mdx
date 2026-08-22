@@ -1,6 +1,6 @@
 ---
 title: Quickstart — JavaScript
-description: Add Ratelane to an Express, Fastify, or Hono app in under 5 minutes.
+description: Add Ratelane to an Express or Fastify app in under 5 minutes.
 ---
 
 ## Express
@@ -15,15 +15,20 @@ import { ratelaneMiddleware } from '@ratelane/express';
 
 const app = express();
 
+app.use(express.json());
+
 const ratelane = ratelaneMiddleware({
-  apiKey: 'rl_your_api_key',
-  serviceName: 'my-api',
+  apiKey: 'sk_live_your_api_key',
+  collectorUrl: 'https://api.ratelane.dev',
+  instanceVersion: '1.0.0', // optional: your app version
 });
 
 app.use(ratelane);
 
-// call attach() after all routes are registered
+// call attach() AFTER all routes are registered
 ratelane.attach(app);
+
+app.listen(3000);
 ```
 
 ## Fastify
@@ -39,28 +44,15 @@ import { ratelaneMiddleware } from '@ratelane/fastify';
 const app = Fastify();
 
 await app.register(ratelaneMiddleware, {
-  apiKey: 'rl_your_api_key',
-  serviceName: 'my-api',
+  apiKey: 'sk_live_your_api_key',
+  collectorUrl: 'https://api.ratelane.dev',
+  instanceVersion: '1.0.0', // optional: your app version
 });
+
+await app.listen({ port: 3000 });
 ```
 
-## Hono
-
-```bash
-npm install @ratelane/hono
-```
-
-```ts
-import { Hono } from 'hono';
-import { ratelane } from '@ratelane/hono';
-
-const app = new Hono();
-
-app.use(ratelane({
-  apiKey: 'rl_your_api_key',
-  serviceName: 'my-api',
-}));
-```
+Your instance will appear in the [Ratelane dashboard](https://app.ratelane.dev) within seconds. Routes are discovered automatically on startup.
 
 ## Next steps
 

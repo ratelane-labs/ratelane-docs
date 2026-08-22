@@ -6,7 +6,14 @@ description: Full configuration reference for the Ratelane Python SDK.
 ## Installation
 
 ```bash
-pip install ratelane
+pip install ratelane-sdk
+```
+
+## Imports
+
+```python
+from ratelane.config import RatelaneConfig
+from ratelane.middleware import RatelaneMiddleware, close_ratelane
 ```
 
 ## RatelaneConfig options
@@ -14,10 +21,11 @@ pip install ratelane
 | Option | Type | Required | Description |
 |--------|------|----------|-------------|
 | `api_key` | `str` | ✅ | Your Ratelane API key from the dashboard |
-| `service_name` | `str` | ✅ | Identifies this service in the fleet |
+| `collector_url` | `str` | ✅ | `https://api.ratelane.dev` for production |
+| `fastapi_app` | `FastAPI` | ✅ | Your FastAPI app instance — used for route discovery |
 | `instance_version` | `str` | ❌ | Your app version, shown in instance detail |
-| `poll_interval` | `int` | ❌ | Telemetry poll interval in seconds (default: `30`) |
-| `alert_email` | `str` | ❌ | Email to notify on circuit breaker trips |
+| `telemetry_flush_interval_seconds` | `int` | ❌ | How often telemetry is sent (default: `30`) |
+| `ep_trigger_after_seconds` | `int` | ❌ | Seconds before emergency profile auto-triggers |
 
 ## Middleware
 
@@ -25,14 +33,12 @@ pip install ratelane
 app.add_middleware(RatelaneMiddleware, config=config)
 ```
 
-The middleware intercepts every request, enforces the active policy, and batches telemetry on a background thread — no latency added to your requests.
+## Shutdown hook
 
-## CLI
+Always register the shutdown hook to flush telemetry cleanly:
 
-The SDK ships a CLI for local testing:
-
-```bash
-ratelane status        # show active policies for this service
-ratelane emergency on  # activate emergency profile
-ratelane emergency off # deactivate emergency profile
+```python
+@app.on_event("shutdown")
+async def shutdown():
+    await close_ratelane()
 ```

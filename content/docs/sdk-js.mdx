@@ -9,30 +9,41 @@ description: Full configuration reference for the Ratelane JavaScript SDKs.
 |---------|-----------|
 | `@ratelane/express` | Express |
 | `@ratelane/fastify` | Fastify |
-| `@ratelane/hono` | Hono |
 
 ## Config options
 
-All three packages share the same config shape:
+Both packages share the same config shape:
 
 | Option | Type | Required | Description |
 |--------|------|----------|-------------|
 | `apiKey` | `string` | ✅ | Your Ratelane API key from the dashboard |
-| `serviceName` | `string` | ✅ | Identifies this service in the fleet |
+| `collectorUrl` | `string` | ✅ | `https://api.ratelane.dev` for production |
 | `instanceVersion` | `string` | ❌ | Your app version, shown in instance detail |
-| `pollInterval` | `number` | ❌ | Telemetry poll interval in ms (default: `30000`) |
-| `alertEmail` | `string` | ❌ | Email to notify on circuit breaker trips |
-| `framework` | `string` | ❌ | Override auto-detected framework name |
+
+## Express — attach()
+
+For Express, you must call `attach()` **after** all routes are registered. This is how Ratelane discovers your routes:
+
+```ts
+app.use(ratelane);
+
+// register all your routes here...
+
+ratelane.attach(app); // call last
+```
+
+## Fastify — plugin registration
+
+For Fastify, register the plugin before starting the server:
+
+```ts
+await app.register(ratelaneMiddleware, { ... });
+await app.listen({ port: 3000 });
+```
 
 ## Route discovery
 
-Routes are collected automatically on startup:
-
-- **Express** — via `attach(app)` after all routes are registered
-- **Fastify** — via the plugin's `onRoute` hook
-- **Hono** — via middleware introspection
-
-`HEAD` routes are filtered from discovery but still enforced normally.
+Routes are collected automatically on startup. `HEAD` routes are filtered from discovery but still enforced normally.
 
 ## Device info
 

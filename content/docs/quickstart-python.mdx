@@ -6,26 +6,32 @@ description: Add Ratelane to a FastAPI app in under 5 minutes.
 ## Install
 
 ```bash
-pip install ratelane
+pip install ratelane-sdk
 ```
 
 ## Configure
 
-Create a `RatelaneConfig` and attach the middleware to your FastAPI app:
-
 ```python
 from fastapi import FastAPI
-from ratelane import RatelaneMiddleware, RatelaneConfig
+from ratelane.config import RatelaneConfig
+from ratelane.middleware import RatelaneMiddleware, close_ratelane
 
 app = FastAPI()
 
 config = RatelaneConfig(
-    api_key="rl_your_api_key",
-    service_name="my-api",
-    instance_version="1.0.0",  # optional
+    api_key="sk_live_your_api_key",
+    collector_url="https://api.ratelane.dev",
+    fastapi_app=app,
+    instance_version="1.0.0",           # optional: your app version
+    telemetry_flush_interval_seconds=30, # optional: default 30
+    ep_trigger_after_seconds=10,         # optional: emergency profile trigger
 )
 
 app.add_middleware(RatelaneMiddleware, config=config)
+
+@app.on_event("shutdown")
+async def shutdown():
+    await close_ratelane()
 ```
 
 ## Run
