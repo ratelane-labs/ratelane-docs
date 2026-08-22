@@ -1,45 +1,33 @@
+```md
 # ratelane-docs
 
-This is a Next.js application generated with
-[Create Fumadocs](https://github.com/fuma-nama/fumadocs).
+Documentation site for [Ratelane](https://ratelane.dev) — built with [Fumadocs](https://fumadocs.dev) and Next.js.
 
-Run development server:
+Live at [docs.ratelane.dev](https://docs.ratelane.dev)
 
-```bash
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+## Structure
+
+```
+content/docs/       # MDX pages
+src/app/            # Next.js app router
+src/components/     # MDX component overrides
+src/lib/            # Source config, shared constants
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+## Development
 
-## Explore
+```bash
+npm install
+npm run dev
+```
 
-In the project, you can see:
+Open [http://localhost:3000](http://localhost:3000).
 
-- `lib/source.ts`: Code for content source adapter, [`loader()`](https://fumadocs.dev/docs/headless/source-api) provides the interface to access your content.
-- `lib/layout.shared.tsx`: Shared options for layouts, optional but preferred to keep.
+## Contributing
 
-| Route                     | Description                                            |
-| ------------------------- | ------------------------------------------------------ |
-| `app/(home)`              | The route group for your landing page and other pages. |
-| `app/docs`                | The documentation layout and pages.                    |
-| `app/api/search/route.ts` | The Route Handler for search.                          |
+Found a mistake or want to improve the docs? Open an issue or submit a PR — contributions welcome.
 
-### Fumadocs MDX
+## License
 
-Collections are defined with the [Macro API](https://fumadocs.dev/docs/mdx/macro) in `lib/source.ts`.
-
-Read the [Introduction](https://fumadocs.dev/docs/mdx) for further details.
-
-## Learn More
-
-To learn more about Next.js and Fumadocs, take a look at the following
-resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Fumadocs](https://fumadocs.dev) - learn about Fumadocs
+MIT
+```
