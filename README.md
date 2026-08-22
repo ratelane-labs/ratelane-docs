@@ -1,4 +1,3 @@
-```md
 # ratelane-docs
 
 Documentation site for [Ratelane](https://ratelane.dev) — built with [Fumadocs](https://fumadocs.dev) and Next.js.
@@ -30,4 +29,3 @@ Found a mistake or want to improve the docs? Open an issue or submit a PR — co
 ## License
 
 MIT
-```
