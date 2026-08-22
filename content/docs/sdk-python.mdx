@@ -1,0 +1,38 @@
+---
+title: Python SDK
+description: Full configuration reference for the Ratelane Python SDK.
+---
+
+## Installation
+
+```bash
+pip install ratelane
+```
+
+## RatelaneConfig options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `api_key` | `str` | ✅ | Your Ratelane API key from the dashboard |
+| `service_name` | `str` | ✅ | Identifies this service in the fleet |
+| `instance_version` | `str` | ❌ | Your app version, shown in instance detail |
+| `poll_interval` | `int` | ❌ | Telemetry poll interval in seconds (default: `30`) |
+| `alert_email` | `str` | ❌ | Email to notify on circuit breaker trips |
+
+## Middleware
+
+```python
+app.add_middleware(RatelaneMiddleware, config=config)
+```
+
+The middleware intercepts every request, enforces the active policy, and batches telemetry on a background thread — no latency added to your requests.
+
+## CLI
+
+The SDK ships a CLI for local testing:
+
+```bash
+ratelane status        # show active policies for this service
+ratelane emergency on  # activate emergency profile
+ratelane emergency off # deactivate emergency profile
+```

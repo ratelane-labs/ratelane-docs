@@ -1,0 +1,42 @@
+---
+title: Quickstart — Python
+description: Add Ratelane to a FastAPI app in under 5 minutes.
+---
+
+## Install
+
+```bash
+pip install ratelane
+```
+
+## Configure
+
+Create a `RatelaneConfig` and attach the middleware to your FastAPI app:
+
+```python
+from fastapi import FastAPI
+from ratelane import RatelaneMiddleware, RatelaneConfig
+
+app = FastAPI()
+
+config = RatelaneConfig(
+    api_key="rl_your_api_key",
+    service_name="my-api",
+    instance_version="1.0.0",  # optional
+)
+
+app.add_middleware(RatelaneMiddleware, config=config)
+```
+
+## Run
+
+```bash
+uvicorn main:app --reload
+```
+
+Your instance will appear in the [Ratelane dashboard](https://app.ratelane.dev) within seconds. Routes are discovered automatically on startup.
+
+## Next steps
+
+- [Python SDK Reference](/docs/sdk-python) — all config options
+- [Concepts: Policy & Enforcement](/docs/concepts-policy) — how rate limits are applied

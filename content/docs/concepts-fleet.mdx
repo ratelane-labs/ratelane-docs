@@ -1,0 +1,31 @@
+---
+title: Fleet & Instances
+description: How Ratelane tracks and displays your running API instances.
+---
+
+## What is a fleet?
+
+A fleet is the collection of all running instances of a service. Every instance that starts with the same `service_name` (or `serviceName`) joins the same fleet automatically.
+
+This means if you run 4 replicas of `my-api`, they all appear together in the dashboard under one service — with individual instance-level detail available for each.
+
+## Instance identity
+
+Each instance is identified by a combination of:
+
+- **Service name** — from your config
+- **Device ID** — a stable ID generated on first run, persisted to disk
+- **Instance version** — optional, from your config
+
+## What you can see per instance
+
+- Runtime (Node.js / Python) and version
+- Framework (Express, Fastify, Hono, FastAPI)
+- SDK version
+- Uptime and last seen
+- Per-route request counts and latency
+- Active policy
+
+## Instance lifecycle
+
+Instances appear in the dashboard as soon as they send their first telemetry poll. If an instance stops sending polls (e.g. it was shut down), it is marked inactive after a configurable timeout.

@@ -1,0 +1,32 @@
+---
+title: Emergency Profile
+description: One-click fleet-wide rate limit override for incidents and traffic spikes.
+---
+
+## What it is
+
+The Emergency Profile (EP) is a pre-configured set of tighter rate limit policies that can be activated instantly across your entire fleet — no redeploy, no config change.
+
+It's designed for two scenarios:
+
+- **Traffic spike** — you're getting hammered and need to shed load immediately
+- **Incident response** — a downstream service is struggling and you need to reduce pressure fast
+
+## Activating
+
+From the dashboard, click **Activate Emergency Profile** on any service. All running instances pick it up on their next poll (within 30 seconds by default).
+
+You can also activate via the CLI:
+
+```bash
+ratelane emergency on
+ratelane emergency off
+```
+
+## How it overrides
+
+When the EP is active, it takes highest priority — above all per-route policies and global defaults. Your normal policies are preserved and resume automatically when the EP is deactivated.
+
+## Configuration
+
+Set your EP limits in **Dashboard → Settings → Emergency Profile**. You can configure different limits per route or apply a single global multiplier (e.g. reduce all limits to 20% of normal).

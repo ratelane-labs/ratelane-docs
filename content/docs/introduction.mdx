@@ -1,0 +1,21 @@
+---
+title: Introduction
+description: What Ratelane is and how it works.
+---
+
+Ratelane is an API observability and policy control plane for FastAPI and Node.js (Express, Fastify, Hono).
+
+You add a single middleware to your server. The middleware:
+
+1. Discovers your routes automatically on startup
+2. Sends telemetry (request counts, latency, IP, device info) to Ratelane on a background poll
+3. Enforces rate limit policies returned from the control plane — without a round-trip on every request
+
+The result is a live dashboard showing traffic across your entire fleet, with per-route policy control you can change without redeploying.
+
+## Key concepts
+
+- **Fleet** — all running instances of your API, grouped by service name
+- **Policy** — per-route rate limit rules (requests/window, burst, block behaviour)
+- **Emergency Profile** — a one-click override that tightens limits across the whole fleet instantly
+- **Circuit Breaker** — automatic protection when an instance exceeds a threshold

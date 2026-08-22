@@ -1,0 +1,21 @@
+{
+  "title": "Ratelane",
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "introduction",
+    "quickstart-python",
+    "quickstart-js",
+    "---SDK Reference---",
+    "sdk-python",
+    "sdk-js",
+    "---Concepts---",
+    "concepts-policy",
+    "concepts-emergency-profile",
+    "concepts-fleet",
+    "---Dashboard---",
+    "dashboard-routes",
+    "dashboard-analytics",
+    "dashboard-billing"
+  ]
+}

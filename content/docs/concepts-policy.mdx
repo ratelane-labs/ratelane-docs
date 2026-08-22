@@ -1,0 +1,40 @@
+---
+title: Policy & Enforcement
+description: How Ratelane applies rate limit policies to your routes.
+---
+
+## How policies work
+
+Policies are defined per route in the Ratelane dashboard and synced to your instances on every telemetry poll (default every 30 seconds).
+
+Each policy defines:
+
+- **Limit** — maximum requests allowed in the window
+- **Window** — time window in seconds
+- **Burst** — optional short-term burst allowance above the limit
+- **Block behaviour** — `429` response, delay, or silent drop
+
+## Enforcement
+
+Enforcement happens **in-process** — no external round-trip on each request. The middleware holds the active policy in memory and evaluates it locally, making enforcement zero-latency.
+
+When a new policy is synced, it takes effect on the next request after the poll completes.
+
+## Policy priority
+
+Policies are matched in this order:
+
+1. Exact route match (e.g. `GET /api/users/:id`)
+2. Wildcard route match
+3. Global default policy (if set)
+4. Emergency Profile (overrides everything when active)
+
+## Rate limit headers
+
+By default, Ratelane adds standard headers to every response:
+
+```
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 87
+X-RateLimit-Reset: 1724000000
+```

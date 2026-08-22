@@ -1,0 +1,68 @@
+---
+title: Quickstart — JavaScript
+description: Add Ratelane to an Express, Fastify, or Hono app in under 5 minutes.
+---
+
+## Express
+
+```bash
+npm install @ratelane/express
+```
+
+```ts
+import express from 'express';
+import { ratelaneMiddleware } from '@ratelane/express';
+
+const app = express();
+
+const ratelane = ratelaneMiddleware({
+  apiKey: 'rl_your_api_key',
+  serviceName: 'my-api',
+});
+
+app.use(ratelane);
+
+// call attach() after all routes are registered
+ratelane.attach(app);
+```
+
+## Fastify
+
+```bash
+npm install @ratelane/fastify
+```
+
+```ts
+import Fastify from 'fastify';
+import { ratelaneMiddleware } from '@ratelane/fastify';
+
+const app = Fastify();
+
+await app.register(ratelaneMiddleware, {
+  apiKey: 'rl_your_api_key',
+  serviceName: 'my-api',
+});
+```
+
+## Hono
+
+```bash
+npm install @ratelane/hono
+```
+
+```ts
+import { Hono } from 'hono';
+import { ratelane } from '@ratelane/hono';
+
+const app = new Hono();
+
+app.use(ratelane({
+  apiKey: 'rl_your_api_key',
+  serviceName: 'my-api',
+}));
+```
+
+## Next steps
+
+- [JavaScript SDK Reference](/docs/sdk-js) — all config options
+- [Concepts: Policy & Enforcement](/docs/concepts-policy) — how rate limits are applied

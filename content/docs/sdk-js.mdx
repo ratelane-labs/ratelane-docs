@@ -1,0 +1,49 @@
+---
+title: JavaScript SDK
+description: Full configuration reference for the Ratelane JavaScript SDKs.
+---
+
+## Packages
+
+| Package | Framework |
+|---------|-----------|
+| `@ratelane/express` | Express |
+| `@ratelane/fastify` | Fastify |
+| `@ratelane/hono` | Hono |
+
+## Config options
+
+All three packages share the same config shape:
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `apiKey` | `string` | ✅ | Your Ratelane API key from the dashboard |
+| `serviceName` | `string` | ✅ | Identifies this service in the fleet |
+| `instanceVersion` | `string` | ❌ | Your app version, shown in instance detail |
+| `pollInterval` | `number` | ❌ | Telemetry poll interval in ms (default: `30000`) |
+| `alertEmail` | `string` | ❌ | Email to notify on circuit breaker trips |
+| `framework` | `string` | ❌ | Override auto-detected framework name |
+
+## Route discovery
+
+Routes are collected automatically on startup:
+
+- **Express** — via `attach(app)` after all routes are registered
+- **Fastify** — via the plugin's `onRoute` hook
+- **Hono** — via middleware introspection
+
+`HEAD` routes are filtered from discovery but still enforced normally.
+
+## Device info
+
+Every telemetry poll includes:
+
+```ts
+{
+  sdk_version: string,      // auto from package.json
+  runtime: 'node',
+  runtime_version: string,  // e.g. "20.11.0"
+  framework: string,        // e.g. "express"
+  instance_version: string  // from your config
+}
+```

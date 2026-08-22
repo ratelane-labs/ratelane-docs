@@ -1,0 +1,30 @@
+---
+title: Routes & Policy
+description: Viewing your discovered routes and managing rate limit policies in the dashboard.
+---
+
+## Routes page
+
+The Routes page shows every route discovered across your fleet, grouped by service. For each route you can see:
+
+- Method and path (e.g. `GET /api/users/:id`)
+- Request volume (last 24h)
+- Active policy
+- Which instances have reported this route
+
+## Setting a policy
+
+1. Click any route to open the policy editor
+2. Set your **limit**, **window**, and optional **burst**
+3. Choose the **block behaviour** — `429`, delay, or drop
+4. Click **Save** — the policy is pushed to all instances on their next poll
+
+Changes take effect within one poll interval (default 30 seconds). No redeploy needed.
+
+## Route groups
+
+You can group routes and apply a shared policy to all of them. Useful for versioned APIs (e.g. all `/v1/*` routes share one policy).
+
+## Global default
+
+Set a global default policy that applies to any route without an explicit policy. Good as a safety net.
