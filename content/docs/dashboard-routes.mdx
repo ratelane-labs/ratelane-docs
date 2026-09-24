@@ -23,7 +23,12 @@ Changes take effect within one poll interval (default 30 seconds). No redeploy n
 
 ## Route groups
 
-You can group routes and apply a shared policy to all of them. Useful for versioned APIs (e.g. all `/v1/*` routes share one policy).
+Group routes that should share a limit, such as all `/v1/*` routes, and set the policy once on the group. Groups are available in both the policy and the Emergency Profile editors.
+
+- Ratelane expands each group into per-route limits on the server, so no SDK change or upgrade is needed.
+- An **explicit route policy overrides its group**. Use this for a route that needs a tighter or looser limit than the rest.
+- In the Emergency Profile, groups share a **rate limit only**.
+- Per-route CORS settings are not supported on groups.
 
 ## Global default
 

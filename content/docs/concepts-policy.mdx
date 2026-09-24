@@ -25,9 +25,10 @@ When a new policy is synced, it takes effect on the next request after the poll 
 Policies are matched in this order:
 
 1. Exact route match (e.g. `GET /api/users/:id`)
-2. Wildcard route match
-3. Global default policy (if set)
-4. Emergency Profile (overrides everything when active)
+2. Route group policy (an explicit route always overrides its group)
+3. Wildcard route match
+4. Global default policy (if set)
+5. Emergency Profile (overrides everything when active)
 
 ## Rate limit headers
 
